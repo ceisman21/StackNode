@@ -6,32 +6,66 @@ Creates a Stack of StackNode type object
 */
 
 
-public class Stack {
+public class Stack<T>{
 
-    private int length; //height of the stack
-    private StackNode topNode; //the Node at the top of the stack
-    private StackNode bottomNode; //The Node at the bottom of the stack\
+    private int length;                                     //height of the stack
+    private StackNode topNode;                              //the Node at the top of the stack
+    private StackNode bottomNode;                           //The Node at the bottom of the stack\
 
-    public Stack() {    //Empty Constructor.
+    public Stack() {                                        //Empty Constructor.
         length = 0;
         topNode = null;
         bottomNode = null;
     }
-    public Stack(StackNode bottomNode) {    //Constructor for a single node
+    public Stack(StackNode bottomNode) {                    //Constructor with an initial node
+        StackNode tempNode = new StackNode(bottomNode);
         length = 1;
-        topNode = bottomNode;
-        bottomNode = bottomNode;
+        topNode = tempNode;
+        this.bottomNode = tempNode;
     }
-    public Stack() {    //Constructor for more than 1 node.
-        length = 0;
-        topNode = null;
-        bottomNode = null;
+    void push(T element) {                                  //add an element
+        if(length == 0) {                                   //If the stack has no items
+            StackNode tempNode = new StackNode(element);
+            bottomNode = tempNode;
+            topNode = tempNode;
+        } else {                                            //If the Stack already exists
+            StackNode tempNode = new StackNode(element, topNode);
+            topNode = new StackNode();
+        }
+        length++;
     }
-
-
-    void push(E element)   {}  //add an element
-    E pop()    {}             //remove and return the top element
-    boolean isEmpty() {}
-    int size() {}
-    E peek()     {}           //look at the top element without removing
+    public T pop(){                                         //remove and return the top element
+        if (length == 0) {
+            return null;
+        }
+        else if (length == 1) {
+            length = 0;
+            return (T)(bottomNode.getData());
+        } else {
+            T tempData = (T)(topNode.getData());
+            topNode = topNode.getChild();
+            return tempData;
+        }
+    }
+    public boolean isEmpty() {                              //Returns whether or not the sack is empty
+        if (length == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public int size() {                                     //Returns the height of the stack
+        return length;
+    }
+    public T peek(){                                        //look at the top element without removing
+        if (length == 0) {
+            return null;
+        }
+        else if (length == 1) {
+            return (T)(bottomNode.getData());
+        } else {
+            T tempData = (T)(topNode.getData());
+            return tempData;
+        }
+    }
 }

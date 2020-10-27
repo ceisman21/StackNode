@@ -30,6 +30,13 @@ public class StackNode<T> {
         hasChild = false;
         this.child = child;
     }
+    public StackNode(StackNode tempNode) {             //Constructor with annother node
+        //Initialize variables
+        data = (T)(tempNode.getData());
+        hasChild = tempNode.hasChild();
+        child = tempNode.getChild();
+    }
+
     public T getData(){                                //Returns the Data of this node
         return data;
     }
