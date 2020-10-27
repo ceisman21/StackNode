@@ -29,23 +29,22 @@ public class Stack<T>{
             bottomNode = tempNode;
             topNode = tempNode;
         } else {                                            //If the Stack already exists
-            StackNode tempNode = new StackNode(element, topNode);
-            topNode = new StackNode();
+            StackNode copyNode = new StackNode(topNode);
+            StackNode tempNode = new StackNode(element, copyNode);
+            topNode = tempNode;
         }
         length++;
     }
     public T pop(){                                         //remove and return the top element
-        if (length == 0) {
-            return null;
-        }
-        else if (length == 1) {
+        T tempData = peek();
+        if (length == 1 || length == 0) {
             length = 0;
-            return (T)(bottomNode.getData());
         } else {
-            T tempData = (T)(topNode.getData());
+            tempData = (T)(topNode.getData());
             topNode = topNode.getChild();
-            return tempData;
+            length--;
         }
+        return tempData;
     }
     public boolean isEmpty() {                              //Returns whether or not the sack is empty
         if (length == 0) {
@@ -60,9 +59,6 @@ public class Stack<T>{
     public T peek(){                                        //look at the top element without removing
         if (length == 0) {
             return null;
-        }
-        else if (length == 1) {
-            return (T)(bottomNode.getData());
         } else {
             T tempData = (T)(topNode.getData());
             return tempData;
